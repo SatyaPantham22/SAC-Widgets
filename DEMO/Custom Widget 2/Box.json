@@ -11,21 +11,21 @@
 		{
 			"kind": "main",
 			"tag": "com-demo-gauge",
-			"url": "https://example.demo/box/box.js",
+			"url": "https://github.com/SatyaPantham22/SAC-Widgets/blob/main/DEMO/Custom%20Widget%202/JS/box.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		},
 		{
 			"kind": "styling",
 			"tag": "com-demo-gauge-sps",
-			"url": "https://example.demo/box/box_sps.js",
+			"url": "https://github.com/SatyaPantham22/SAC-Widgets/blob/main/DEMO/Custom%20Widget%202/JS/box_sps.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		},
 		{
 			"kind": "builder",
 			"tag": "com-demo-box-bps",
-			"url": "https://example.demo/box/box_bps.js",
+			"url": "https://github.com/SatyaPantham22/SAC-Widgets/blob/main/DEMO/Custom%20Widget%202/JS/box_bps.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		}

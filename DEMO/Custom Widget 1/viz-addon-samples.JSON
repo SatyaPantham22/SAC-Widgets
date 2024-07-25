@@ -1,0 +1,147 @@
+{
+    "id": "com.demo.localVizAddOns",
+    "version": "1.0.0",
+    "name": "Widget Customization Local Add-on",
+    "description": "A widget customization add-on demo",
+    "icon": "undefined",
+    "vendor": "Demo",
+    "eula": "EULA",
+    "license": "1.0",
+    "extensions": [
+        {
+            "extensionPoint": "sap.addOn.viz.tooltip",
+            "webcomponents": [
+                {
+                    "kind": "main",
+                    "tag": "viz-tooltip",
+                    "url": "http://localhost:8088/viz-tooltip.js",
+                    "integrity": "",
+                    "ignoreIntegrity": true
+                },
+                {
+                    "kind": "builder",
+                    "tag": "viz-tooltip-build",
+                    "url": "http://localhost:8088/viz-tooltip-builder-panel.js",
+                    "integrity": "",
+                    "ignoreIntegrity": true
+                }
+            ],
+            "properties": {
+                "max": {
+                    "type": "number",
+                    "description": "The max of range value",
+                    "default": "100"
+                },
+                "color": {
+                    "type": "string",
+                    "description": "Text Color info",
+                    "default": "lightblue"
+                }
+            }
+        },
+        {
+            "extensionPoint": "sap.addOn.viz.plotarea.barColumn",
+            "webcomponents": [
+                {
+                    "kind": "main",
+                    "tag": "viz-overlay",
+                    "url": "http://localhost:8088/viz-plotarea.js",
+                    "integrity": "",
+                    "ignoreIntegrity": true
+                },
+                {
+                    "kind": "builder",
+                    "tag": "viz-plotarea-build",
+                    "url": "http://localhost:8088/viz-plotarea-builder-panel.js",
+                    "integrity": "",
+                    "ignoreIntegrity": true
+                }
+            ],
+            "properties": {
+                "sapHideOriginalDataPointMark": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "sapHideOriginalDataPointLabel": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "sapHideOriginalXAxisLabel": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "sapHideOriginalYAxisLabel": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "rounded": {
+                    "type": "boolean",
+                    "description": "Should bar/column be rounded",
+                    "default": true
+                },
+                "sizeIncrement": {
+                    "type": "number",
+                    "description": "The increment rate of bar/column size",
+                    "default": 0
+                },
+                "axisLabelColor": {
+                    "type": "string",
+                    "description": "The chart axis label color",
+                    "default": "#fff"
+                }
+            }
+        },
+        {
+            "extensionPoint": "sap.addOn.viz.plotarea.numericPoint",
+            "webcomponents": [
+                {
+                    "kind": "main",
+                    "tag": "viz-metric-plotarea",
+                    "url": "http://localhost:8088/viz-metric-plotarea.js",
+                    "integrity": "",
+                    "ignoreIntegrity": true
+                },
+                {
+                    "kind": "builder",
+                    "tag": "viz-metric-plotarea-build",
+                    "url": "http://localhost:8088/viz-metric-plotarea-build.js",
+                    "integrity": "",
+                    "ignoreIntegrity": true
+                }
+            ],
+            "properties": {
+                "sapHideOriginalPrimaryNumber": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "sapHideOriginalPrimaryLabel": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "sapHideOriginalSecondaryNumber": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "sapHideOriginalSecondaryLabel": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "labelColor": {
+                    "type": "string",
+                    "description": "The chart axis label color",
+                    "default": "red"
+                },
+                "numberColor": {
+                    "type": "string",
+                    "description": "The chart axis number color",
+                    "default": "green"
+                },
+                "max": {
+                    "type": "number",
+                    "description": "The max of range value",
+                    "default": "100"
+                }
+            }
+        }
+  ]
+}

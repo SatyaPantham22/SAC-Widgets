@@ -1,20 +1,14 @@
-/*var getScriptPromisify = (src) => {
-  return new Promise((resolve) => {
-    $.getScript(src, resolve);
-  });
-};*/
-
 var getScriptPromisify = (src) => {
   // Workaround with conflict between geo widget and echarts.
-  const __define = define
-  define = undefined
-  return new Promise(resolve => {
+  const __define = define;
+  define = undefined;
+  return new Promise((resolve, reject) => {
     $.getScript(src, () => {
-      define = __define
-      resolve()
-    })
-  })
-}
+      define = __define;
+      resolve();
+    }).fail(reject);
+  });
+};
 
 (function () {
   const prepared = document.createElement("template");
@@ -39,7 +33,9 @@ var getScriptPromisify = (src) => {
     }
 
     onCustomWidgetResize(width, height) {
-      this.render();
+      if (this._myChart) {
+        this._myChart.resize();
+      }
     }
 
     set myDataSource(dataBinding) {
@@ -48,27 +44,40 @@ var getScriptPromisify = (src) => {
     }
 
     async render() {
-      await getScriptPromisify(
-        "https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"
-        
-      );
+      try {
+        await getScriptPromisify(
+          "https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"
+        );
+      } catch (error) {
+        console.error('Error loading ECharts script:', error);
+        return;
+      }
 
       if (!this._myDataSource || this._myDataSource.state !== "success") {
         return;
       }
 
-      const dimension = this._myDataSource.metadata.feeds.dimensions.values[0];
-      const measure = this._myDataSource.metadata.feeds.measures.values[0];
+      const dimensions = this._myDataSource.metadata.feeds.dimensions.values;
+      const measures = this._myDataSource.metadata.feeds.measures.values;
+
+      if (!dimensions.length || !measures.length) {
+        console.error('Invalid data source structure');
+        return;
+      }
+
+      const dimension = dimensions[0];
+      const measure = measures[0];
       const data = this._myDataSource.data.map((data) => {
         return {
           name: data[dimension].label,
           value: data[measure].raw
         }
-      }).sort(function(a, b){
-        return a.value - b.value
-      })
+      }).sort((a, b) => a.value - b.value);
 
-      const myChart = echarts.init(this._root, "wight")
+      if (!this._myChart) {
+        this._myChart = echarts.init(this._root, "white");
+      }
+
       const option = {
         backgroundColor: '',
         title: {
@@ -97,7 +106,6 @@ var getScriptPromisify = (src) => {
             radius: '55%',
             center: ['50%', '50%'],
             data,
-         
             roseType: 'radius',
             label: {
               color: '#1D2D3E'
@@ -120,11 +128,10 @@ var getScriptPromisify = (src) => {
             animationDelay: function (idx) {
               return Math.random() * 200;
             }
-            
           }
         ]
       };
-      myChart.setOption(option);
+      this._myChart.setOption(option);
     }
   }
 

@@ -29,7 +29,6 @@ const htmlTemplate = `
   <div id="root"></div>
 `;
 
-// Custom Element Definition
 class CustomPieSample extends HTMLElement {
   constructor() {
     super();
@@ -38,6 +37,22 @@ class CustomPieSample extends HTMLElement {
     this._root = this._shadowRoot.getElementById("root");
     this._props = {};
     this._myDataSource = null;
+    this.width = 600;
+    this.height = 420;
+    this.dimensionFeed = [];
+    this.measureFeed = [];
+    this.caption = "";
+  }
+
+  static get observedAttributes() {
+    return ['width', 'height', 'dimensionFeed', 'measureFeed', 'caption'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this[name] = newValue;
+      this.render();
+    }
   }
 
   connectedCallback() {
@@ -45,6 +60,8 @@ class CustomPieSample extends HTMLElement {
   }
 
   onCustomWidgetResize(width, height) {
+    this.width = width;
+    this.height = height;
     this.render();
   }
 
@@ -77,7 +94,7 @@ class CustomPieSample extends HTMLElement {
     const option = {
       backgroundColor: '',
       title: {
-        text: '',
+        text: this.caption,
         left: 'center',
         top: 20,
         textStyle: { color: '' },
@@ -116,6 +133,61 @@ class CustomPieSample extends HTMLElement {
       ],
     };
     myChart.setOption(option);
+  }
+
+  getCaption() {
+    return this.caption;
+  }
+
+  setCaption(caption) {
+    this.caption = caption;
+    this.render();
+  }
+
+  openSelectModelDialog() {
+    this.dataBindings.getDataBinding('myDataSource').openSelectModelDialog();
+  }
+
+  getDimensions() {
+    return this.dataBindings.getDataBinding('myDataSource').getDataSource().getDimensions();
+  }
+
+  getMeasures() {
+    return this.dataBindings.getDataBinding('myDataSource').getDataSource().getMeasures();
+  }
+
+  addDimension(dimensionId) {
+    // Add logic to handle adding a dimension
+  }
+
+  addMeasure(measureId) {
+    // Add logic to handle adding a measure
+  }
+
+  removeDimension(dimensionId) {
+    // Add logic to handle removing a dimension
+  }
+
+  removeMeasure(measureId) {
+    // Add logic to handle removing a measure
+  }
+
+  getDimensionsOnFeed() {
+    // Return the dimensions currently on the feed
+    return this.dimensionFeed;
+  }
+
+  getMeasuresOnFeed() {
+    // Return the measures currently on the feed
+    return this.measureFeed;
+  }
+
+  getDataSource() {
+    return this.dataBindings.getDataBinding('myDataSource').getDataSource();
+  }
+
+  setModel(modelId) {
+    this.dataBindings.getDataBinding('myDataSource').setModel(modelId);
   }
 }
 
